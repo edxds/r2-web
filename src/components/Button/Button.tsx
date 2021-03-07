@@ -14,7 +14,9 @@ export type ButtonProps<E extends ElementType> = PolymorphicComponentProps<E, Bu
 
 const defaultElement = 'button';
 
-export const Button = forwardRef(
+export const Button: <E extends ElementType = typeof defaultElement>(
+  props: ButtonProps<E>,
+) => JSX.Element | null = forwardRef(
   <E extends React.ElementType = typeof defaultElement>(
     {
       size = 'md',
