@@ -1,17 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { ReactComponent as ReactLogo } from '@r2/logo.svg';
 
-function App() {
+export function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
+    <div className="text-center">
+      <header className="bg-gray-50 text-gray-800 p-4 min-h-screen flex flex-col items-center justify-center">
+        <ReactLogo
+          className="text-brand fill-current h-64 mb-8 animate-spin-slow"
+          aria-label="React Logo"
+        />
+        <p className="text-xl mb-2">
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
         <a
-          className="App-link"
+          className="text-brand text-lg"
           href="https://reactjs.org"
           target="_blank"
           rel="noopener noreferrer"
@@ -22,5 +23,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
