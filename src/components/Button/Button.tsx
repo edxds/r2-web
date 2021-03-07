@@ -33,7 +33,11 @@ export const Button: <E extends ElementType = typeof defaultElement>(
       <Box
         as={defaultElement}
         ref={ref}
-        className={clsx(className, 'flex items-center rounded-xl', {
+        className={clsx(className, 'flex items-center', {
+          // Border radius
+          'rounded-xl': size !== 'sm',
+          'rounded-lg': size === 'sm',
+
           // Weight
           'font-black': weight === 'heavy',
           'font-medium': weight === 'medium',
