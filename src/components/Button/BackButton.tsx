@@ -22,7 +22,8 @@ export const BackButton: <E extends ElementType = typeof defaultElement>(
       color = 'primary',
       variant = 'text',
       weight = 'medium',
-      props,
+      children,
+      ...props
     }: BackButtonProps<E>,
     ref: typeof props.ref,
   ) => (
