@@ -21,11 +21,12 @@ export const BackButton: <E extends ElementType = typeof defaultElement>(
       size = 'md',
       color = 'primary',
       variant = 'text',
+      weight = 'medium',
       props,
     }: BackButtonProps<E>,
     ref: typeof props.ref,
   ) => (
-    <Button ref={ref} size={size} color={color} variant={variant} {...props}>
+    <Button ref={ref} size={size} color={color} variant={variant} weight={weight} {...props}>
       <BackIcon className="fill-current icon" />
       <span>{title}</span>
     </Button>
