@@ -1,20 +1,25 @@
 import { ElementType, forwardRef } from 'react';
+import { PolymorphicComponentProps } from 'react-polymorphic-box';
 
 import { ReactComponent as BackIcon } from '@r2/assets/icons/back.svg';
+import { PolymorphicComponent } from '@r2/polymorphic';
 
-import { Button, ButtonProps } from './Button';
+import { Button, ButtonOwnProps } from './Button';
 
-export interface BackButtonOwnProps {
+export interface BackButtonOwnProps extends ButtonOwnProps {
   title?: string;
 }
 
-export type BackButtonProps<E extends ElementType> = BackButtonOwnProps & ButtonProps<E>;
+export type BackButtonProps<
+  E extends ElementType = typeof defaultElement
+> = PolymorphicComponentProps<E, BackButtonOwnProps>;
 
 const defaultElement = 'button';
 
-export const BackButton: <E extends ElementType = typeof defaultElement>(
-  props: BackButtonProps<E>,
-) => JSX.Element | null = forwardRef(
+export const BackButton: PolymorphicComponent<
+  BackButtonOwnProps,
+  typeof defaultElement
+> = forwardRef(
   <E extends ElementType = typeof defaultElement>(
     {
       title = 'Voltar',
@@ -33,3 +38,4 @@ export const BackButton: <E extends ElementType = typeof defaultElement>(
     </Button>
   ),
 );
+BackButton.displayName = 'BackButton';

@@ -2,6 +2,8 @@ import clsx from 'clsx';
 import { ElementType, forwardRef, ReactNode } from 'react';
 import { Box, PolymorphicComponentProps } from 'react-polymorphic-box';
 
+import { PolymorphicComponent } from '@r2/polymorphic';
+
 export interface ButtonOwnProps {
   size?: 'sm' | 'md' | 'lg';
   color?: 'primary' | 'neutral';
@@ -14,9 +16,7 @@ export type ButtonProps<E extends ElementType> = PolymorphicComponentProps<E, Bu
 
 const defaultElement = 'button';
 
-export const Button: <E extends ElementType = typeof defaultElement>(
-  props: ButtonProps<E>,
-) => JSX.Element | null = forwardRef(
+export const Button: PolymorphicComponent<ButtonOwnProps, typeof defaultElement> = forwardRef(
   <E extends React.ElementType = typeof defaultElement>(
     {
       size = 'md',
@@ -75,3 +75,4 @@ export const Button: <E extends ElementType = typeof defaultElement>(
     );
   },
 );
+Button.displayName = 'Button';
