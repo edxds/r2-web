@@ -1,5 +1,6 @@
 import { useHistory } from 'react-router';
 
+import { TextField } from '@r2/components/Fields';
 import { BackButton, Button } from '@r2/components/Button';
 import { ReactComponent as ForwardIcon } from '@r2/assets/icons/forward.svg';
 
@@ -17,19 +18,11 @@ export function Login() {
           <section className="space-y-4">
             <label className="flex flex-col space-y-2">
               <p className="text-base text-gray-800">E-mail ou nome de usuário</p>
-              <input
-                type="text"
-                placeholder="eduardo@gmail.com"
-                className="w-full rounded-xl border-gray-300 focus:shadow-md focus:border-brand text-sm text-gray-800"
-              />
+              <TextField type="text" placeholder="eduardo@gmail.com" />
             </label>
             <label className="flex flex-col space-y-2">
               <p className="text-base text-gray-800">Senha</p>
-              <input
-                type="password"
-                placeholder="ilovemilkshakes123"
-                className="w-full rounded-xl border-gray-300 focus:shadow-md focus:border-brand text-sm text-gray-800"
-              />
+              <TextField type="password" placeholder="ilovemilkshakes123" />
             </label>
           </section>
           <Button type="submit" className="mt-6 w-full" color="primary" size="lg">
