@@ -8,8 +8,8 @@ export function Login() {
   const { goBack } = useHistory();
 
   return (
-    <div className="min-h-screen flex justify-center sm:items-center sm:bg-gray-50">
-      <main className="bg-white flex flex-col sm:max-w-md sm:rounded-xl sm:shadow-md sm:mb-16">
+    <div className="min-h-screen flex justify-center sm:items-center bg-white">
+      <main className="flex flex-col sm:max-w-md sm:mb-16">
         <header className="p-6">
           <BackButton className="md:hidden mb-4" onClick={goBack} />
           <h1 className="text-brand text-4xl font-black">Entre com a sua conta do R2</h1>
