@@ -8,7 +8,7 @@ export function TextField({ className, ...props }: TextFieldProps) {
     <input
       type="text"
       className={clsx(
-        'text-sm text-gray-800',
+        'text-base text-gray-800',
         'rounded-xl border-gray-300 outline-none',
         'focus:shadow-md focus:border-brand',
         'transition-all',
