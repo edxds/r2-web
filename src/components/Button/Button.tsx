@@ -1,14 +1,18 @@
 import clsx from 'clsx';
 import { ElementType, forwardRef, ReactNode } from 'react';
 import { Box, PolymorphicComponentProps } from 'react-polymorphic-box';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import { PolymorphicComponent } from '@r2/polymorphic';
+
+import { Spinner } from '../Spinner';
 
 export interface ButtonOwnProps {
   size?: 'sm' | 'md' | 'lg';
   color?: 'primary' | 'neutral';
   variant?: 'solid' | 'flat' | 'text';
   weight?: 'medium' | 'heavy';
+  isLoading?: boolean;
   children?: ReactNode;
 }
 
@@ -23,6 +27,7 @@ export const Button: PolymorphicComponent<ButtonOwnProps, typeof defaultElement>
       color = 'neutral',
       variant = 'solid',
       weight = 'heavy',
+      isLoading,
       className,
       children,
       ...props
@@ -33,7 +38,7 @@ export const Button: PolymorphicComponent<ButtonOwnProps, typeof defaultElement>
       <Box
         as={defaultElement}
         ref={ref}
-        className={clsx(className, 'flex items-center justify-center', 'disabled:opacity-25', {
+        className={clsx(className, 'flex items-center justify-center', 'disabled:opacity-50', {
           // Border radius
           'rounded-xl': size !== 'sm',
           'rounded-lg': size === 'sm',
@@ -70,7 +75,16 @@ export const Button: PolymorphicComponent<ButtonOwnProps, typeof defaultElement>
         })}
         {...props}
       >
-        {children}
+        <AnimatePresence>{isLoading && <Spinner />}</AnimatePresence>
+        <motion.div
+          layout
+          className={clsx('flex items-center justify-center', {
+            'space-x-3': variant !== 'text' && size !== 'sm',
+            'space-x-2': variant === 'text' || size === 'sm',
+          })}
+        >
+          {children}
+        </motion.div>
       </Box>
     );
   },
