@@ -1,0 +1,32 @@
+.spinner {
+  border-radius: 50%;
+  width: 1em;
+  height: 1em;
+
+  position: relative;
+  border-top: 0.15em solid transparent;
+  border-right: 0.15em solid transparent;
+  border-bottom: 0.15em solid transparent;
+  border-left: 0.15em solid currentColor;
+  animation: spin 1.1s infinite linear;
+}
+
+.spinner:after {
+  @apply absolute inset-0;
+  border-radius: inherit;
+  content: '';
+
+  box-shadow: 0 0 0 0.2em currentColor;
+  opacity: 0.25;
+}
+
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
