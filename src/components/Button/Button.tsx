@@ -33,7 +33,7 @@ export const Button: PolymorphicComponent<ButtonOwnProps, typeof defaultElement>
       <Box
         as={defaultElement}
         ref={ref}
-        className={clsx(className, 'flex items-center justify-center', {
+        className={clsx(className, 'flex items-center justify-center', 'disabled:opacity-25', {
           // Border radius
           'rounded-xl': size !== 'sm',
           'rounded-lg': size === 'sm',
