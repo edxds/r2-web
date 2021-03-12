@@ -1,11 +1,44 @@
 import { useHistory } from 'react-router';
+import { Controller, useForm } from 'react-hook-form';
+import { useMutation, useQueryClient } from 'react-query';
 
 import { TextField } from '@r2/components/Fields';
 import { BackButton, Button } from '@r2/components/Button';
 import { ReactComponent as ForwardIcon } from '@r2/assets/icons/forward.svg';
 
+import { signIn } from './service';
+
+export type LoginFormValues = {
+  username: string;
+  password: string;
+};
+
 export function Login() {
-  const { goBack } = useHistory();
+  const { goBack, replace } = useHistory();
+
+  const { control, errors, formState, handleSubmit } = useForm<LoginFormValues>({
+    mode: 'onChange',
+  });
+  const { isValid } = formState;
+
+  const client = useQueryClient();
+  const signInMutation = useMutation(signIn, {
+    onSuccess: () => handleSuccess(),
+    onError: () => handleError(),
+  });
+
+  const onSubmit = (values: LoginFormValues) => {
+    signInMutation.mutate(values);
+  };
+
+  const handleSuccess = async () => {
+    await client.invalidateQueries('user');
+    replace('/home');
+  };
+
+  const handleError = () => {
+    window.alert('O login falhou!');
+  };
 
   return (
     <div className="min-h-screen flex justify-center sm:items-center bg-white">
@@ -14,18 +47,42 @@ export function Login() {
           <BackButton className="md:hidden mb-4" onClick={goBack} />
           <h1 className="text-brand text-4xl font-black">Entre com a sua conta do R2</h1>
         </header>
-        <form className="mt-auto p-6">
+        <form className="mt-auto p-6" onSubmit={handleSubmit(onSubmit)}>
           <section className="space-y-4">
             <label className="flex flex-col space-y-2">
               <p className="text-base text-gray-800">E-mail ou nome de usuário</p>
-              <TextField type="text" placeholder="eduardo@gmail.com" />
+              <Controller
+                as={TextField}
+                control={control}
+                rules={{ required: true }}
+                hasError={!!errors.username}
+                name="username"
+                placeholder="eduardo@gmail.com"
+                defaultValue=""
+              />
             </label>
             <label className="flex flex-col space-y-2">
               <p className="text-base text-gray-800">Senha</p>
-              <TextField type="password" placeholder="ilovemilkshakes123" />
+              <Controller
+                as={TextField}
+                control={control}
+                rules={{ required: true }}
+                hasError={!!errors.password}
+                type="password"
+                name="password"
+                placeholder="ilovemilkshakes123"
+                defaultValue=""
+              />
             </label>
           </section>
-          <Button type="submit" className="mt-6 w-full" color="primary" size="lg">
+          <Button
+            size="lg"
+            type="submit"
+            color="primary"
+            className="mt-6 w-full"
+            isLoading={signInMutation.isLoading}
+            disabled={signInMutation.isLoading || !isValid}
+          >
             <span>Entrar</span>
             <ForwardIcon className="fill-current icon-size" />
           </Button>
