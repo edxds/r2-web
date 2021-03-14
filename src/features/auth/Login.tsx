@@ -1,6 +1,8 @@
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useHistory } from 'react-router';
 import { useMutation, useQueryClient } from 'react-query';
+import * as z from 'zod';
 
 import { notify } from '@r2/components/Notifications';
 import { TextField } from '@r2/components/Fields';
@@ -10,16 +12,19 @@ import { ReactComponent as ForwardIcon } from '@r2/assets/icons/forward.svg';
 
 import { signIn } from './service';
 
-export type LoginFormValues = {
-  username: string;
-  password: string;
-};
+const formSchema = z.object({
+  username: z.string().nonempty('Este campo é obrigatório'),
+  password: z.string().nonempty('Este campo é obrigatório'),
+});
+
+export type LoginFormValues = z.infer<typeof formSchema>;
 
 export function Login() {
   const { goBack, replace } = useHistory();
 
   const { register, errors, formState, handleSubmit } = useForm<LoginFormValues>({
     mode: 'onChange',
+    resolver: zodResolver(formSchema),
   });
   const { isValid } = formState;
 
@@ -58,14 +63,14 @@ export function Login() {
         <form className="mt-auto p-6" onSubmit={handleSubmit(onSubmit)}>
           <section className="space-y-4">
             <TextField
-              ref={register({ required: true })}
+              ref={register()}
               label="E-mail ou nome de usuário"
               name="username"
               placeholder="-"
               error={errors.username}
             />
             <TextField
-              ref={register({ required: true })}
+              ref={register()}
               label="Senha"
               name="password"
               type="password"
