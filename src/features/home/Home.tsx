@@ -24,11 +24,13 @@ export function Home() {
   }
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl text-gray-800 font-black">
-        <span className="block text-base text-gray-500 font-normal">Boas-vindas,</span>
-        {user.username}
-      </h1>
+    <div className="flex flex-1 justify-center bg-gray-50 p-6 md:py-16">
+      <div className="flex-1 max-w-screen-md">
+        <h1 className="text-2xl text-gray-800 font-black">
+          <span className="block text-base text-gray-500 font-normal">Boas-vindas,</span>
+          {user.username}
+        </h1>
+      </div>
     </div>
   );
 }
