@@ -2,6 +2,7 @@ import { useHistory } from 'react-router';
 import { Controller, useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from 'react-query';
 
+import { notify } from '@r2/components/Notifications';
 import { TextField } from '@r2/components/Fields';
 import { BackButton, Button } from '@r2/components/Button';
 import { ReactComponent as Logo } from '@r2/assets/icons/logo-4.svg';
@@ -38,7 +39,10 @@ export function Login() {
   };
 
   const handleError = () => {
-    window.alert('O login falhou!');
+    notify({
+      title: 'Erro',
+      body: 'O login falhou. Verifique suas credenciais e tente novamente.',
+    });
   };
 
   return (
