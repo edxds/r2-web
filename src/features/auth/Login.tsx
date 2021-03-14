@@ -1,5 +1,5 @@
+import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router';
-import { Controller, useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from 'react-query';
 
 import { notify } from '@r2/components/Notifications';
@@ -18,7 +18,7 @@ export type LoginFormValues = {
 export function Login() {
   const { goBack, replace } = useHistory();
 
-  const { control, errors, formState, handleSubmit } = useForm<LoginFormValues>({
+  const { register, errors, formState, handleSubmit } = useForm<LoginFormValues>({
     mode: 'onChange',
   });
   const { isValid } = formState;
@@ -57,31 +57,21 @@ export function Login() {
         </header>
         <form className="mt-auto p-6" onSubmit={handleSubmit(onSubmit)}>
           <section className="space-y-4">
-            <label className="flex flex-col space-y-2">
-              <p className="text-base text-gray-800">E-mail ou nome de usuário</p>
-              <Controller
-                as={TextField}
-                control={control}
-                rules={{ required: true }}
-                hasError={!!errors.username}
-                name="username"
-                placeholder="eduardo@gmail.com"
-                defaultValue=""
-              />
-            </label>
-            <label className="flex flex-col space-y-2">
-              <p className="text-base text-gray-800">Senha</p>
-              <Controller
-                as={TextField}
-                control={control}
-                rules={{ required: true }}
-                hasError={!!errors.password}
-                type="password"
-                name="password"
-                placeholder="ilovemilkshakes123"
-                defaultValue=""
-              />
-            </label>
+            <TextField
+              ref={register({ required: true })}
+              label="E-mail ou nome de usuário"
+              name="username"
+              placeholder="-"
+              error={errors.username}
+            />
+            <TextField
+              ref={register({ required: true })}
+              label="Senha"
+              name="password"
+              type="password"
+              placeholder="-"
+              error={errors.password}
+            />
           </section>
           <Button
             size="lg"
