@@ -1,0 +1,51 @@
+.container {
+  @apply flex flex-1 bg-gray-50;
+}
+
+.content {
+  @apply flex-1 grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+}
+
+.items {
+  @apply flex h-14;
+  @apply fixed bottom-0 left-0 right-0;
+  @apply border-t border-gray-200 bg-white;
+}
+
+.screen {
+  @apply flex;
+}
+
+@screen md {
+  .container {
+    display: grid;
+    grid-template-columns: 1fr minmax(min-content, theme('screens.lg')) 1fr;
+    grid-template-rows: 100%;
+    grid-template-areas: 'space content space1';
+  }
+  
+  .content {
+    @apply gap-4;
+    grid-template-columns: minmax(min-content, 12rem) minmax(min-content, theme('screens.md'));
+    grid-template-rows: 1fr;
+    
+    grid-area: content;
+    grid-template-areas: 'items screen';
+
+    transform: translateX(-5vw);
+  }
+
+  .screen {
+    grid-area: screen;
+  }
+
+  .items {
+    @apply sticky top-0;
+    @apply border-t-0 bg-transparent;
+    @apply flex-col px-4 py-16 space-y-4;
+    grid-area: items;
+    height: min-content;
+  }
+}
