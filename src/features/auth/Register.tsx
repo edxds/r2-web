@@ -2,23 +2,27 @@ import clsx from 'clsx';
 
 import { TextField } from '@r2/components/Fields';
 import { BackButton, Button } from '@r2/components/Button';
+import { ReactComponent as Logo } from '@r2/assets/icons/logo-4.svg';
 import { ReactComponent as ForwardIcon } from '@r2/assets/icons/forward.svg';
 import { ReactComponent as AddPhotoIcon } from '@r2/assets/icons/add-photo.svg';
 
 export function Register() {
   return (
-    <div className="min-h-screen flex justify-center sm:items-center bg-white">
-      <main className="flex flex-col sm:max-w-md">
+    <div className="flex flex-1 justify-center sm:items-center bg-white">
+      <main className="w-full flex flex-col sm:max-w-md">
         <header className="p-6">
           <BackButton className="md:hidden mb-4" />
-          <h1 className="text-brand text-4xl font-black">Faça parte da comunidade R2</h1>
+          <div className="flex flex-col items-center space-y-2">
+            <Logo />
+            <h1 className="text-brand text-4xl font-black">Criar conta</h1>
+          </div>
         </header>
         <form className="p-6 flex-1 flex flex-col">
           <label
             className={clsx(
               'bg-gray-200 text-gray-400',
               'flex items-center justify-center',
-              'm-auto sm:my-8 w-32 h-32 rounded-full',
+              'm-auto my-8 w-32 h-32 rounded-full',
               'outline-none focus:outline-none cursor-pointer',
             )}
             style={{ ['-webkit-tap-highlight-color' as any]: 'transparent' }}
