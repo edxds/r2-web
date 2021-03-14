@@ -1,10 +1,9 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Switch } from 'react-router-dom';
 
 import { NotificationsContainer } from './components/Notifications';
 import { authRoutes } from './features/auth/routes';
-import { homeRoutes } from './features/home/routes';
-import { NotFound } from './NotFound';
+import { FluidNavigation } from './features/navigation';
 
 const queryClient = new QueryClient();
 
@@ -14,10 +13,7 @@ export function App() {
       <BrowserRouter>
         <Switch>
           {authRoutes}
-          {homeRoutes}
-          <Route path="*">
-            <NotFound />
-          </Route>
+          <FluidNavigation />
         </Switch>
       </BrowserRouter>
       <NotificationsContainer />
