@@ -31,6 +31,12 @@ module.exports = {
     },
     transitionDuration: {
       DEFAULT: '300ms',
+      150: '150ms',
+      200: '200ms',
+      250: '250ms',
+      300: '300ms',
+      400: '400ms',
+      500: '500ms',
     },
     transitionTimingFunction: {
       DEFAULT: 'cubic-bezier(0.4, 0, 0.2, 1)',
