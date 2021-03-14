@@ -1,6 +1,8 @@
 import { useQuery } from 'react-query';
 import { Redirect } from 'react-router';
 
+import { Spinner } from '@r2/components/Spinner';
+
 import { getUserInfo } from '../user/service';
 
 export interface HomeProps {}
@@ -13,15 +15,20 @@ export function Home() {
     return <Redirect to="/sign-in" />;
   }
 
+  if (userQuery.isLoading || !user) {
+    return (
+      <div className="flex flex-1">
+        <Spinner className="text-brand text-2xl m-auto" />
+      </div>
+    );
+  }
+
   return (
     <div className="p-6">
-      {userQuery.isLoading && <p className="w-full text-center text-gray-600">Carregando...</p>}
-      {user && (
-        <h1 className="text-2xl text-gray-800 font-black">
-          <span className="block text-base text-gray-500 font-normal">Boas-vindas,</span>
-          {user?.username}
-        </h1>
-      )}
+      <h1 className="text-2xl text-gray-800 font-black">
+        <span className="block text-base text-gray-500 font-normal">Boas-vindas,</span>
+        {user.username}
+      </h1>
     </div>
   );
 }
