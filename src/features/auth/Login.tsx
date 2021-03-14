@@ -46,7 +46,7 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-screen w-full flex justify-center sm:items-center bg-white">
+    <div className="flex flex-1 justify-center sm:items-center bg-white">
       <main className="w-full flex flex-col sm:max-w-md sm:mb-16">
         <header className="p-6">
           <BackButton className="md:hidden mb-4" onClick={goBack} />
