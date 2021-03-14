@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from 'react-query';
 
 import { TextField } from '@r2/components/Fields';
 import { BackButton, Button } from '@r2/components/Button';
+import { ReactComponent as Logo } from '@r2/assets/icons/logo-4.svg';
 import { ReactComponent as ForwardIcon } from '@r2/assets/icons/forward.svg';
 
 import { signIn } from './service';
@@ -41,11 +42,14 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-screen flex justify-center sm:items-center bg-white">
-      <main className="flex flex-col sm:max-w-md sm:mb-16">
+    <div className="min-h-screen w-full flex justify-center sm:items-center bg-white">
+      <main className="w-full flex flex-col sm:max-w-md sm:mb-16">
         <header className="p-6">
           <BackButton className="md:hidden mb-4" onClick={goBack} />
-          <h1 className="text-brand text-4xl font-black">Entre com a sua conta do R2</h1>
+          <div className="flex flex-col items-center space-y-2">
+            <Logo />
+            <h1 className="text-brand text-4xl font-black">Entrar</h1>
+          </div>
         </header>
         <form className="mt-auto p-6" onSubmit={handleSubmit(onSubmit)}>
           <section className="space-y-4">
