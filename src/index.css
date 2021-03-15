@@ -20,6 +20,12 @@
       height: 1em;
     }
   }
+
+  .icon-button {
+    @apply rounded-full;
+    @apply ring-2 ring-opacity-0 focus:ring-opacity-50;
+    @apply outline-none focus:outline-none;
+  }
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
