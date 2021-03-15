@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import { Switch, Route, Link, useRouteMatch } from 'react-router-dom';
 
 import { feedRoutes } from '../feed/routes';
+import { communityRoutes } from '../community/routes';
 import { NotFound } from '../../NotFound';
 
 import { ReactComponent as FeedIcon } from './assets/feed.svg';
@@ -16,6 +17,7 @@ export function FluidNavigation() {
         <main className={styles.screen}>
           <Switch>
             {feedRoutes}
+            {communityRoutes}
             <Route path="*">
               <NotFound />
             </Route>
