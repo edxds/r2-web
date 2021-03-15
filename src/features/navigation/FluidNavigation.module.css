@@ -16,6 +16,7 @@
 
 .screen {
   @apply flex;
+  @apply pb-14;
 }
 
 @screen md {
@@ -39,6 +40,7 @@
 
   .screen {
     grid-area: screen;
+    @apply pb-0;
   }
 
   .items {
