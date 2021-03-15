@@ -26,13 +26,13 @@ export function Notification(props: NotificationProps) {
       initial={{ opacity: 0, y: -32 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -32 }}
-      className="pointer-events-auto bg-gray-600 text-white rounded-xl shadow-xl m-4 p-4"
+      className="pointer-events-auto bg-gray-600 text-white rounded-xl shadow-xl m-4 p-4 md:max-w-sm"
     >
       <main className="mb-2">
         <h6 className="opacity-75 text-sm tracking-wider uppercase">{props.title}</h6>
         <p className="opacity-95 text-base mt-0.5">{props.body}</p>
       </main>
-      <div className="rounded-full h-1 bg-gray-500 w-1/4 mx-auto" />
+      <div className="rounded-full h-1 bg-gray-500 w-1/4 mx-auto md:hidden" />
     </motion.li>
   );
 }

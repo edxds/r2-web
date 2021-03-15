@@ -15,7 +15,7 @@ export function NotificationsContainer(props: NotificationOptions) {
   );
 
   return (
-    <motion.ul className="fixed inset-0 pointer-events-none">
+    <motion.ul className="fixed inset-0 pointer-events-none flex flex-col items-stretch md:items-end">
       <AnimatePresence>
         {notificationArray.map((notification) => (
           <Notification key={notification.id} {...notification} />
