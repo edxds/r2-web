@@ -8,7 +8,7 @@ import { ReactComponent as AddIcon } from '@r2/assets/icons/add.svg';
 
 const paths = [
   {
-    to: '/community/create',
+    to: '/feed/community/create',
     children: (
       <>
         <AddIcon className="icon fill-current -ml-1" />

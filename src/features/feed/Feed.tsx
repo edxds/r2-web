@@ -7,9 +7,9 @@ import { getUserInfo } from '../user/service';
 
 import { FeedMenu } from './FeedMenu';
 
-export interface HomeProps {}
+export interface FeedProps {}
 
-export function Home() {
+export function Feed() {
   const userQuery = useQuery('user', getUserInfo);
   const user = userQuery.data;
 

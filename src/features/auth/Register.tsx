@@ -40,7 +40,7 @@ export function Register() {
 
   const handleSuccess = async () => {
     await client.invalidateQueries('user');
-    replace('/home');
+    replace('/feed');
   };
 
   const handleError = (error: AxiosError) => {

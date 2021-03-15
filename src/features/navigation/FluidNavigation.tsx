@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { ReactNode } from 'react';
 import { Switch, Route, Link, useRouteMatch } from 'react-router-dom';
 
-import { homeRoutes } from '../home/routes';
+import { feedRoutes } from '../feed/routes';
 import { NotFound } from '../../NotFound';
 
 import { ReactComponent as FeedIcon } from './assets/feed.svg';
@@ -15,14 +15,14 @@ export function FluidNavigation() {
       <div className={styles.content}>
         <main className={styles.screen}>
           <Switch>
-            {homeRoutes}
+            {feedRoutes}
             <Route path="*">
               <NotFound />
             </Route>
           </Switch>
         </main>
         <div className={styles.items}>
-          <FluidNavItem to="/home" label="Feed">
+          <FluidNavItem to="/feed" label="Feed">
             <FeedIcon className="fill-current icon" />
           </FluidNavItem>
           <FluidNavItem to="/profile" label="Perfil">
