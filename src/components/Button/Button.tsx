@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { ElementType, forwardRef, ReactNode } from 'react';
 import { Box, PolymorphicComponentProps } from 'react-polymorphic-box';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 
 import { PolymorphicComponent } from '@r2/polymorphic';
 
@@ -76,15 +76,7 @@ export const Button: PolymorphicComponent<ButtonOwnProps, typeof defaultElement>
         {...props}
       >
         <AnimatePresence>{isLoading && <Spinner />}</AnimatePresence>
-        <motion.div
-          layout
-          className={clsx('flex items-center justify-center', {
-            'space-x-3': variant !== 'text' && size !== 'sm',
-            'space-x-2': variant === 'text' || size === 'sm',
-          })}
-        >
-          {children}
-        </motion.div>
+        {children}
       </Box>
     );
   },
