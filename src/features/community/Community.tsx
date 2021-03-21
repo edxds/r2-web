@@ -1,13 +1,12 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import clsx from 'clsx';
 
 import { Spinner } from '@r2/components/Spinner';
 import { BackButton, Button } from '@r2/components/Button';
-import { ReactComponent as WriteIcon } from '@r2/assets/icons/write.svg';
 
 import { useUser } from '../user/hooks';
 import { Post, PostList } from '../posts';
+import { CreatePost } from '../posts/CreatePost';
 import { useDeletePost, useLivePosts } from '../posts/hooks';
 
 import { useCommunity } from './hooks';
@@ -18,6 +17,9 @@ export interface CommunityProps {
 
 export function Community({ id }: CommunityProps) {
   const history = useHistory();
+
+  const createPostAnchorRef = useRef<HTMLDivElement>(null);
+  const [createPostHeight, setCreatePostHeight] = useState(0);
 
   const [community, communityQuery] = useCommunity(id);
   const [user, { isLoading: isUserLoading }] = useUser();
@@ -35,15 +37,27 @@ export function Community({ id }: CommunityProps) {
   const isMember = user && community.members.some((u) => user.id === u.id);
 
   return (
-    <div className="flex flex-col flex-1 p-6 md:py-16 space-y-6">
-      <CommunityHeader
-        title={community.title}
-        description={community.desc}
-        isMember={isMember}
-        onGoBack={history.goBack}
+    <>
+      <div
+        ref={createPostAnchorRef}
+        className="flex flex-col flex-1 p-6 md:py-16 space-y-6"
+        style={{ paddingBottom: createPostHeight + 24 }}
+      >
+        <CommunityHeader
+          title={community.title}
+          description={community.desc}
+          isMember={isMember}
+          onGoBack={history.goBack}
+        />
+        <CommunityPosts communityId={id} />
+      </div>
+      <CreatePost
+        className="md:px-10"
+        communityId={community.id}
+        onHeightChange={setCreatePostHeight}
+        anchorRef={createPostAnchorRef.current}
       />
-      <CommunityPosts communityId={id} />
-    </div>
+    </>
   );
 }
 
@@ -123,10 +137,6 @@ function CommunityHeader({
     <header className="space-y-4">
       <section className="flex justify-between item-center">
         <BackButton onClick={onGoBack} />
-        <Button weight="medium" color="primary" variant="text">
-          <span>Novo Post</span>
-          <WriteIcon className="fill-current icon" />
-        </Button>
       </section>
       <section className="flex flex-col space-y-1">
         <h1 className="text-gray-800 text-lg font-black">{title}</h1>
