@@ -51,7 +51,7 @@
 }
 
 @screen xl {
-  .content {
-    transform: translateX(-5vw);
+  .container {
+    padding-right: 5%;
   }
 }
