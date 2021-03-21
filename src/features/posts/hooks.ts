@@ -1,14 +1,32 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useMutation } from 'react-query';
+import { AxiosError } from 'axios';
 import uniqBy from 'lodash/uniqBy';
 import io from 'socket.io-client';
 
+import { notify } from '@r2/components/Notifications';
+
 import { PostDto } from './dto';
 import { sortPostsByDate } from './utils';
-import { deletePost } from './service';
+import { createPost, deletePost } from './service';
 
 export function useDeletePost() {
   const mutation = useMutation(deletePost);
+  return [mutation.mutateAsync, mutation] as const;
+}
+
+export function useCreatePost({ onSuccess }: { onSuccess: () => any }) {
+  const mutation = useMutation(createPost, {
+    onSuccess,
+    onError: (error: AxiosError) => {
+      let message = 'Um erro ocorreu e não foi possível fazer sua postagem';
+      if (error.response?.data.message) {
+        message = error.response.data.message;
+      }
+
+      notify({ title: 'Oops!', body: message });
+    },
+  });
   return [mutation.mutateAsync, mutation] as const;
 }
 
