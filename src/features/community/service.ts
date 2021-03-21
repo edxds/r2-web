@@ -1,4 +1,5 @@
 import { http } from '../network';
+import { PostDto } from '../posts/dto';
 import { UserDto } from '../user/service';
 
 export type CreateCommunityDto = {
@@ -34,9 +35,16 @@ export type CommunityDto = {
   avatar?: string;
   isPrivate?: boolean;
   members: UserDto[];
+  posts: PostDto[];
 };
 
 export async function getCommunity(id: number) {
-  const res = await http.get<CommunityDto>(`/community/${id}?includeMembers=true`);
+  const res = await http.get<CommunityDto>(`/community/${id}`, {
+    params: {
+      includeMembers: true,
+      includePosts: true,
+    },
+  });
+
   return res.data;
 }

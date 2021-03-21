@@ -1,10 +1,13 @@
 import { Link, useHistory } from 'react-router-dom';
+import clsx from 'clsx';
 
 import { Spinner } from '@r2/components/Spinner';
 import { BackButton, Button } from '@r2/components/Button';
 import { ReactComponent as WriteIcon } from '@r2/assets/icons/write.svg';
 
 import { useUser } from '../user/hooks';
+import { Post, PostList } from '../posts';
+import { useLivePosts } from '../posts/hooks';
 
 import { useCommunity } from './hooks';
 
@@ -17,6 +20,10 @@ export function Community({ id }: CommunityProps) {
 
   const [community, communityQuery] = useCommunity(id);
   const [user, { isLoading: isUserLoading }] = useUser();
+  const livePosts = useLivePosts({
+    communityId: community?.id,
+    existingPosts: community?.posts ?? [],
+  });
 
   const communityError = communityQuery.error;
 
@@ -31,13 +38,24 @@ export function Community({ id }: CommunityProps) {
   const isMember = user && community.members.some((u) => user.id === u.id);
 
   return (
-    <div className="flex flex-col flex-1 p-6 md:py-16">
+    <div className="flex flex-col flex-1 p-6 md:py-16 space-y-6">
       <CommunityHeader
         title={community.title}
         description={community.desc}
         isMember={isMember}
         onGoBack={history.goBack}
       />
+      <PostList className="-mx-6 md:mx-0">
+        {livePosts.map((post) => (
+          <Post
+            key={post.id}
+            author={post.author.username}
+            content={post.content}
+            createdAt={post.createdAt}
+            replyCount={post.replies.length}
+          />
+        ))}
+      </PostList>
     </div>
   );
 }
