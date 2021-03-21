@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 
@@ -7,7 +8,7 @@ import { ReactComponent as WriteIcon } from '@r2/assets/icons/write.svg';
 
 import { useUser } from '../user/hooks';
 import { Post, PostList } from '../posts';
-import { useLivePosts } from '../posts/hooks';
+import { useDeletePost, useLivePosts } from '../posts/hooks';
 
 import { useCommunity } from './hooks';
 
@@ -20,10 +21,6 @@ export function Community({ id }: CommunityProps) {
 
   const [community, communityQuery] = useCommunity(id);
   const [user, { isLoading: isUserLoading }] = useUser();
-  const livePosts = useLivePosts({
-    communityId: community?.id,
-    existingPosts: community?.posts ?? [],
-  });
 
   const communityError = communityQuery.error;
 
@@ -45,18 +42,44 @@ export function Community({ id }: CommunityProps) {
         isMember={isMember}
         onGoBack={history.goBack}
       />
-      <PostList className="-mx-6 md:mx-0">
-        {livePosts.map((post) => (
-          <Post
-            key={post.id}
-            author={post.author.username}
-            content={post.content}
-            createdAt={post.createdAt}
-            replyCount={post.replies.length}
-          />
-        ))}
-      </PostList>
+      <CommunityPosts communityId={id} />
     </div>
+  );
+}
+
+function CommunityPosts({ communityId }: { communityId: number }) {
+  const [community] = useCommunity(communityId);
+  const livePosts = useLivePosts({
+    communityId: community?.id,
+    existingPosts: community?.posts ?? [],
+  });
+
+  const [postsBeingDeleted, setPostsBeingDeleted] = useState<Set<number>>(new Set());
+
+  const [deletePost] = useDeletePost();
+  const handleDeletePost = async (id: number) => {
+    const newSet = new Set(postsBeingDeleted);
+    newSet.add(id);
+    setPostsBeingDeleted(newSet);
+
+    await deletePost(id);
+  };
+
+  return (
+    <PostList className="-mx-6 md:mx-0">
+      {livePosts.map((post) => (
+        <Post
+          key={post.id}
+          authorId={post.authorId}
+          author={post.author.username}
+          content={post.content}
+          createdAt={post.createdAt}
+          replyCount={post.replies.length}
+          isBeingDeleted={postsBeingDeleted.has(post.id)}
+          onDelete={() => handleDeletePost(post.id)}
+        />
+      ))}
+    </PostList>
   );
 }
 

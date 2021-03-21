@@ -10,3 +10,9 @@ export type PostDto = {
   author: UserDto;
   replies: PostDto[];
 };
+
+export type CreatePostDto = {
+  content: string;
+  communityId: number;
+  parentPostId?: number;
+};

@@ -1,9 +1,16 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useMutation } from 'react-query';
 import uniqBy from 'lodash/uniqBy';
 import io from 'socket.io-client';
 
 import { PostDto } from './dto';
 import { sortPostsByDate } from './utils';
+import { deletePost } from './service';
+
+export function useDeletePost() {
+  const mutation = useMutation(deletePost);
+  return [mutation.mutateAsync, mutation] as const;
+}
 
 export function useLivePosts({
   existingPosts,

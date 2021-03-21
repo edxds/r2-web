@@ -1,20 +1,50 @@
 /* eslint-disable import/no-duplicates */
 import clsx from 'clsx';
 import { ComponentPropsWithoutRef } from 'react';
+import { MenuItem } from '@szhsin/react-menu';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
+import { DropdownMenu } from '@r2/components/DropdownMenu';
+
+import { useUser } from '../user/hooks';
+
 export interface PostProps {
   author: string;
+  authorId: number;
   createdAt: string;
   replyCount: number;
   content: string;
+  isBeingDeleted?: boolean;
+  onDelete?(): any;
 }
 
-export function Post({ author, createdAt, replyCount, content }: PostProps) {
+export function Post({
+  author,
+  authorId,
+  createdAt,
+  replyCount,
+  content,
+  isBeingDeleted,
+  onDelete,
+}: PostProps) {
+  const [user] = useUser({ dontRedirect: true });
+  const isUserAuthor = user?.id === authorId;
+
   return (
-    <div className="flex flex-col bg-white py-4 px-6 space-y-2">
-      <PostAuthor author={author} />
+    <div
+      className={clsx('flex flex-col bg-white py-4 px-6 space-y-2', isBeingDeleted && 'opacity-25')}
+    >
+      <section className="flex items-end justify-between">
+        <PostAuthor author={author} />
+        {isUserAuthor && (
+          <DropdownMenu>
+            <MenuItem onClick={onDelete} className="dropdown-menu-item">
+              Apagar post
+            </MenuItem>
+          </DropdownMenu>
+        )}
+      </section>
       <p className="text-base text-gray-800 line-clamp-3">{content}</p>
       <PostFooter timestamp={createdAt} replyCount={replyCount} />
     </div>
