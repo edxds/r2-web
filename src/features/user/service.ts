@@ -1,6 +1,14 @@
 import { http } from '../network';
 
-export async function getUserInfo() {
-  const res = await http.get('/users/whoami');
+export type UserDto = {
+  id: number;
+  username: string;
+  email: string;
+  socialId?: string;
+  needsSetup?: boolean;
+};
+
+export async function getUserInfo(): Promise<UserDto> {
+  const res = await http.get<UserDto>('/users/whoami');
   return res.data;
 }
