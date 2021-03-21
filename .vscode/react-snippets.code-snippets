@@ -1,0 +1,7 @@
+{
+  "Icon": {
+    "scope": "typescriptreact",
+    "prefix": "riicon",
+    "body": "import { ReactComponent as ${1} } from '@r2/assets/icons/${2}.svg';"
+  }
+}
