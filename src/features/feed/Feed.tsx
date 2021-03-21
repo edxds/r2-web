@@ -1,9 +1,8 @@
-import { useQuery } from 'react-query';
 import { Redirect } from 'react-router';
 
 import { Spinner } from '@r2/components/Spinner';
 
-import { getUserInfo } from '../user/service';
+import { useUser } from '../user/hooks';
 
 import { FeedMenu } from './FeedMenu';
 import { FeedSection } from './FeedSection';
@@ -12,8 +11,7 @@ import { FeedAllCommunities } from './FeedAllCommunities';
 export interface FeedProps {}
 
 export function Feed() {
-  const userQuery = useQuery('user', getUserInfo);
-  const user = userQuery.data;
+  const [user, userQuery] = useUser();
 
   if (userQuery.isError) {
     return <Redirect to="/sign-in" />;
