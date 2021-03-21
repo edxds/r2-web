@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { AxiosError } from 'axios';
 import uniqBy from 'lodash/uniqBy';
 import io from 'socket.io-client';
@@ -11,7 +11,13 @@ import { sortPostsByDate } from './utils';
 import { createPost, deletePost } from './service';
 
 export function useDeletePost() {
-  const mutation = useMutation(deletePost);
+  const client = useQueryClient();
+  const mutation = useMutation(deletePost, {
+    onSuccess: (post) => {
+      client.invalidateQueries(['community', post.communityId]);
+    },
+  });
+
   return [mutation.mutateAsync, mutation] as const;
 }
 

@@ -8,6 +8,6 @@ export async function createPost(dto: CreatePostDto) {
 }
 
 export async function deletePost(postId: number) {
-  const res = await http.delete(`/post/${postId}`);
+  const res = await http.delete<PostDto>(`/post/${postId}`);
   return res.data;
 }
