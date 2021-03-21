@@ -1,4 +1,5 @@
 import { useQuery } from 'react-query';
+import { Link } from 'react-router-dom';
 
 import { Spinner } from '@r2/components/Spinner';
 import { Button } from '@r2/components/Button';
@@ -35,12 +36,16 @@ export function FeedAllCommunities(props: FeedAllCommunitiesProps) {
     return (
       <div className="divide-gray-200 divide-y">
         {query.data?.data.map((community) => (
-          <div key={community.id} className="px-6 py-4">
+          <Link
+            key={community.id}
+            className="block px-6 py-4"
+            to={`/feed/community/${community.id}`}
+          >
             <h4 className="text-base text-gray-800 font-medium leading-relaxed">
               {community.title}
             </h4>
             <p className="text-sm text-gray-600">{community.desc}</p>
-          </div>
+          </Link>
         ))}
       </div>
     );
