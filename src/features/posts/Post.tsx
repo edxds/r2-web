@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import clsx from 'clsx';
-import { Fragment, ComponentPropsWithoutRef } from 'react';
+import { ComponentPropsWithoutRef } from 'react';
 import { MenuItem } from '@szhsin/react-menu';
 import { motion } from 'framer-motion';
 import { formatDistanceToNow, parseISO } from 'date-fns';
@@ -9,6 +9,8 @@ import { ptBR } from 'date-fns/locale';
 import { DropdownMenu } from '@r2/components/DropdownMenu';
 
 import { useUser } from '../user/hooks';
+
+import { PostText } from './PostText';
 
 export interface PostProps {
   author: string;
@@ -50,16 +52,7 @@ export function Post({
           </DropdownMenu>
         )}
       </section>
-      <p className="text-base text-gray-800 line-clamp-3">
-        {content.split('\n').map((pieceOfText, key) => {
-          return (
-            <Fragment key={key}>
-              {pieceOfText}
-              <br />
-            </Fragment>
-          );
-        })}
-      </p>
+      <PostText content={content} className="line-clamp-3" />
       <PostFooter timestamp={createdAt} replyCount={replyCount} />
     </motion.li>
   );
