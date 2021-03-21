@@ -18,6 +18,7 @@ export interface PostProps {
   createdAt: string;
   replyCount: number;
   content: string;
+  clampContent?: boolean;
   isBeingDeleted?: boolean;
   onDelete?(): any;
 }
@@ -28,6 +29,7 @@ export function Post({
   createdAt,
   replyCount,
   content,
+  clampContent,
   isBeingDeleted,
   onDelete,
 }: PostProps) {
@@ -52,7 +54,7 @@ export function Post({
           </DropdownMenu>
         )}
       </section>
-      <PostText content={content} className="line-clamp-3" />
+      <PostText content={content} className={clampContent ? 'line-clamp-3' : undefined} />
       <PostFooter timestamp={createdAt} replyCount={replyCount} />
     </motion.li>
   );

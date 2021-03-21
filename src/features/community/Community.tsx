@@ -83,6 +83,7 @@ function CommunityPosts({ communityId }: { communityId: number }) {
     <PostList className="-mx-6 md:mx-0">
       {livePosts.map((post) => (
         <Post
+          clampContent
           key={post.id}
           authorId={post.authorId}
           author={post.author.username}
