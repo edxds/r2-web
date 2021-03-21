@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import clsx from 'clsx';
-import { ComponentPropsWithoutRef } from 'react';
+import { Fragment, ComponentPropsWithoutRef } from 'react';
 import { MenuItem } from '@szhsin/react-menu';
 import { motion } from 'framer-motion';
 import { formatDistanceToNow, parseISO } from 'date-fns';
@@ -50,7 +50,16 @@ export function Post({
           </DropdownMenu>
         )}
       </section>
-      <p className="text-base text-gray-800 line-clamp-3">{content}</p>
+      <p className="text-base text-gray-800 line-clamp-3">
+        {content.split('\n').map((pieceOfText, key) => {
+          return (
+            <Fragment key={key}>
+              {pieceOfText}
+              <br />
+            </Fragment>
+          );
+        })}
+      </p>
       <PostFooter timestamp={createdAt} replyCount={replyCount} />
     </motion.li>
   );
