@@ -1,11 +1,12 @@
 import { ComponentPropsWithoutRef } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import clsx from 'clsx';
 
-export interface PostListProps extends ComponentPropsWithoutRef<'div'> {}
+export interface PostListProps extends ComponentPropsWithoutRef<typeof motion.ul> {}
 
 export function PostList({ children, className, ...props }: PostListProps) {
   return (
-    <div
+    <motion.ul
       className={clsx(
         className,
         'divide-gray-200 divide-y border-t border-b',
@@ -13,7 +14,7 @@ export function PostList({ children, className, ...props }: PostListProps) {
       )}
       {...props}
     >
-      {children}
-    </div>
+      <AnimatePresence initial={false}>{children}</AnimatePresence>
+    </motion.ul>
   );
 }

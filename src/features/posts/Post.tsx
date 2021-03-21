@@ -2,6 +2,7 @@
 import clsx from 'clsx';
 import { ComponentPropsWithoutRef } from 'react';
 import { MenuItem } from '@szhsin/react-menu';
+import { motion } from 'framer-motion';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
@@ -32,7 +33,11 @@ export function Post({
   const isUserAuthor = user?.id === authorId;
 
   return (
-    <div
+    <motion.li
+      layout="position"
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.8 }}
       className={clsx('flex flex-col bg-white py-4 px-6 space-y-2', isBeingDeleted && 'opacity-25')}
     >
       <section className="flex items-end justify-between">
@@ -47,7 +52,7 @@ export function Post({
       </section>
       <p className="text-base text-gray-800 line-clamp-3">{content}</p>
       <PostFooter timestamp={createdAt} replyCount={replyCount} />
-    </div>
+    </motion.li>
   );
 }
 
