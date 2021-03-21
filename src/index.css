@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 @layer base {
-  html, body, #root {
+  html,
+  body,
+  #root {
     @apply min-h-full flex flex-1 flex-col;
   }
 }
@@ -25,6 +27,13 @@
     @apply rounded-full;
     @apply ring-2 ring-opacity-0 focus:ring-opacity-50;
     @apply outline-none focus:outline-none;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
   }
 }
 
