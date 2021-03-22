@@ -16,6 +16,9 @@ export function useDeletePost() {
     onSuccess: (post) => {
       client.invalidateQueries(['community', post.communityId]);
     },
+    onError: () => {
+      notify({ title: 'Oops!', body: 'Encontramos um erro e não foi possível apagar o seu post' });
+    },
   });
 
   return [mutation.mutateAsync, mutation] as const;
