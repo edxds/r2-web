@@ -48,3 +48,13 @@ export async function getCommunity(id: number) {
 
   return res.data;
 }
+
+export async function joinCommunity(id: number) {
+  const res = await http.post<CommunityDto>(`/community/${id}/join`);
+  return res.data;
+}
+
+export async function leaveCommunity(id: number) {
+  const res = await http.post<CommunityDto>(`/community/${id}/leave`);
+  return res.data;
+}

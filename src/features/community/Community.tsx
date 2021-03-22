@@ -9,7 +9,7 @@ import { Post, PostList } from '../posts';
 import { CreatePost } from '../posts/CreatePost';
 import { useDeletePost, useLivePosts } from '../posts/hooks';
 
-import { useCommunity } from './hooks';
+import { useCommunity, useToggleMembership } from './hooks';
 
 export interface CommunityProps {
   id?: number;
@@ -22,6 +22,7 @@ export function Community({ id }: CommunityProps) {
   const [createPostHeight, setCreatePostHeight] = useState(0);
 
   const [community, communityQuery] = useCommunity(id);
+  const [toggleMembership] = useToggleMembership(id);
   const [user, { isLoading: isUserLoading }] = useUser();
 
   const communityError = communityQuery.error;
@@ -48,6 +49,7 @@ export function Community({ id }: CommunityProps) {
           description={community.desc}
           isMember={isMember}
           onGoBack={history.goBack}
+          onToggleMembership={toggleMembership}
         />
         <CommunityPosts communityId={id} />
       </div>
