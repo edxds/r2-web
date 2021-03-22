@@ -78,7 +78,7 @@ export function useLivePosts({
   );
 
   useEffect(() => {
-    const _socket = io('http://192.168.1.128:8080/posts');
+    const _socket = io(`${process.env.REACT_APP_API_BASE_URL}/posts`);
     _socket.on('connect', () => {
       communityId && _socket.emit('join', { communityId, parentPostId });
     });
