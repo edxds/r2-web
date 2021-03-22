@@ -46,7 +46,7 @@ export function CreatePost({
 
   const handleSend = () => {
     if (isLoading || !content) return;
-    createPost({ communityId, content });
+    createPost({ communityId, parentPostId, content });
   };
 
   useLayoutEffect(() => {

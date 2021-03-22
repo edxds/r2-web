@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { AxiosError } from 'axios';
 import uniqBy from 'lodash/uniqBy';
 import io from 'socket.io-client';
@@ -8,13 +8,19 @@ import { notify } from '@r2/components/Notifications';
 
 import { PostDto } from './dto';
 import { sortPostsByDate } from './utils';
-import { createPost, deletePost } from './service';
+import { createPost, deletePost, getPost } from './service';
+
+export function usePost(id?: number) {
+  const query = useQuery<PostDto, AxiosError>(['post', id], () => getPost(id!), { enabled: !!id });
+  return [query.data, query] as const;
+}
 
 export function useDeletePost() {
   const client = useQueryClient();
   const mutation = useMutation(deletePost, {
     onSuccess: (post) => {
       client.invalidateQueries(['community', post.communityId]);
+      client.invalidateQueries(['post', post.id]);
     },
     onError: () => {
       notify({ title: 'Oops!', body: 'Encontramos um erro e não foi possível apagar o seu post' });
@@ -40,13 +46,17 @@ export function useCreatePost({ onSuccess }: { onSuccess: () => any }) {
 }
 
 export function useLivePosts({
+  sort,
   existingPosts,
   communityId,
   parentPostId,
+  rootOnly,
 }: {
+  sort?: 'asc' | 'desc';
   existingPosts: PostDto[];
   communityId?: number;
   parentPostId?: number;
+  rootOnly?: boolean;
 }) {
   const [socket, setSocket] = useState<SocketIOClient.Socket>();
   const [newPosts, setNewPosts] = useState<PostDto[]>([]);
@@ -95,8 +105,10 @@ export function useLivePosts({
   }, [handleOnPostDeleted, socket]);
 
   return useMemo(() => {
-    const filtered = [...newPosts, ...sortedExistingPosts].filter(({ id }) => !deletedIds.has(id));
+    const filtered = [...newPosts, ...sortedExistingPosts].filter(
+      ({ id, parentPostId }) => !deletedIds.has(id) && (rootOnly ? !parentPostId : true),
+    );
     const unique = uniqBy(filtered, 'id');
-    return sortPostsByDate(unique);
-  }, [deletedIds, newPosts, sortedExistingPosts]);
+    return sortPostsByDate(unique, sort);
+  }, [deletedIds, newPosts, rootOnly, sort, sortedExistingPosts]);
 }

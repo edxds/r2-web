@@ -1,3 +1,4 @@
+import { CommunityDto } from '../community/service';
 import { UserDto } from '../user/service';
 
 export type PostDto = {
@@ -8,6 +9,7 @@ export type PostDto = {
   parentPostId?: number;
   createdAt: string;
   author: UserDto;
+  community?: CommunityDto;
   replies: PostDto[];
 };
 

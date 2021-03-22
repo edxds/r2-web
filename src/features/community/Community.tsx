@@ -66,6 +66,7 @@ function CommunityPosts({ communityId }: { communityId: number }) {
   const livePosts = useLivePosts({
     communityId: community?.id,
     existingPosts: community?.posts ?? [],
+    rootOnly: true,
   });
 
   const [postsBeingDeleted, setPostsBeingDeleted] = useState<Set<number>>(new Set());
@@ -85,6 +86,7 @@ function CommunityPosts({ communityId }: { communityId: number }) {
         <Post
           clampContent
           key={post.id}
+          postId={post.id}
           authorId={post.authorId}
           author={post.author.username}
           content={post.content}

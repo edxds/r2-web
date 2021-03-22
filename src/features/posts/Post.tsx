@@ -5,6 +5,7 @@ import { MenuItem } from '@szhsin/react-menu';
 import { motion } from 'framer-motion';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { Link } from 'react-router-dom';
 
 import { DropdownMenu } from '@r2/components/DropdownMenu';
 
@@ -13,6 +14,7 @@ import { useUser } from '../user/hooks';
 import { PostText } from './PostText';
 
 export interface PostProps {
+  postId: number;
   author: string;
   authorId: number;
   createdAt: string;
@@ -24,6 +26,7 @@ export interface PostProps {
 }
 
 export function Post({
+  postId,
   author,
   authorId,
   createdAt,
@@ -44,7 +47,7 @@ export function Post({
       exit={{ opacity: 0, scale: 0.8 }}
       className={clsx('flex flex-col bg-white py-4 px-6 space-y-2', isBeingDeleted && 'opacity-25')}
     >
-      <section className="flex items-end justify-between">
+      <section className="flex items-end justify-between space-x-2">
         <PostAuthor author={author} />
         {isUserAuthor && (
           <DropdownMenu>
@@ -54,7 +57,9 @@ export function Post({
           </DropdownMenu>
         )}
       </section>
-      <PostText content={content} className={clampContent ? 'line-clamp-3' : undefined} />
+      <Link className="block" to={`/feed/post/${postId}`}>
+        <PostText content={content} className={clampContent ? 'line-clamp-3' : undefined} />
+      </Link>
       <PostFooter timestamp={createdAt} replyCount={replyCount} />
     </motion.li>
   );
