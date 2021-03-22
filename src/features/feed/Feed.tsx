@@ -7,6 +7,7 @@ import { useUser } from '../user/hooks';
 import { FeedMenu } from './FeedMenu';
 import { FeedSection } from './FeedSection';
 import { FeedAllCommunities } from './FeedAllCommunities';
+import { FeedJoinedCommunities } from './FeedJoinedCommunities';
 
 export interface FeedProps {}
 
@@ -35,6 +36,7 @@ export function Feed() {
           </h1>
           <FeedMenu />
         </header>
+        <FeedJoinedCommunities />
         <FeedAllCommunities />
       </div>
     </div>

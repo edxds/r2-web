@@ -1,3 +1,4 @@
+import { CommunityDto } from '../community/service';
 import { http } from '../network';
 
 export type UserDto = {
@@ -10,5 +11,10 @@ export type UserDto = {
 
 export async function getUserInfo(): Promise<UserDto> {
   const res = await http.get<UserDto>('/users/whoami');
+  return res.data;
+}
+
+export async function getJoinedCommunities() {
+  const res = await http.get<CommunityDto[]>('/users/communities');
   return res.data;
 }

@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
 import { useHistory } from 'react-router';
 
-import { getUserInfo } from './service';
+import { getJoinedCommunities, getUserInfo } from './service';
 
 export function useUser(args?: { dontRedirect?: boolean }) {
   const history = useHistory();
@@ -11,5 +11,10 @@ export function useUser(args?: { dontRedirect?: boolean }) {
     history.push('/sign-in');
   }
 
+  return [query.data, query] as const;
+}
+
+export function useJoinedCommunities() {
+  const query = useQuery('joined-communities', getJoinedCommunities);
   return [query.data, query] as const;
 }
