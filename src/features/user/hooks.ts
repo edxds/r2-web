@@ -8,7 +8,7 @@ export function useUser(args?: { dontRedirect?: boolean }) {
   const query = useQuery('user', getUserInfo);
 
   if (query.isError && !args?.dontRedirect) {
-    history.push('/sign-in');
+    history.replace('/welcome');
   }
 
   return [query.data, query] as const;

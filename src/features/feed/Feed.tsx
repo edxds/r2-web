@@ -15,7 +15,7 @@ export function Feed() {
   const [user, userQuery] = useUser();
 
   if (userQuery.isError) {
-    return <Redirect to="/sign-in" />;
+    return <Redirect to="/welcome" />;
   }
 
   if (userQuery.isLoading || !user) {
