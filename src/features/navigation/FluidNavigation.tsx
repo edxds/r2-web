@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { ReactNode } from 'react';
-import { Switch, Route, Link, useRouteMatch } from 'react-router-dom';
+import { Switch, Route, Link, useRouteMatch, Redirect } from 'react-router-dom';
 
 import { feedRoutes } from '../feed/routes';
 import { communityRoutes } from '../community/routes';
@@ -20,6 +20,7 @@ export function FluidNavigation() {
             {feedRoutes}
             {postRoutes}
             {communityRoutes}
+            <Redirect exact from="/" to="/feed" />
             <Route path="*">
               <NotFound />
             </Route>
