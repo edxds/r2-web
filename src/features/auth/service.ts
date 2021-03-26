@@ -13,3 +13,7 @@ export type SignUpDto = {
 export function signUp(dto: SignUpDto) {
   return http.post('/auth/register', dto);
 }
+
+export async function postRevoke(tokenId?: number) {
+  return http.post('/auth/revoke', {}, { params: { token: tokenId } });
+}

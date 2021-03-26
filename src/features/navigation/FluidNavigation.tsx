@@ -5,6 +5,7 @@ import { Switch, Route, Link, useRouteMatch, Redirect } from 'react-router-dom';
 import { feedRoutes } from '../feed/routes';
 import { communityRoutes } from '../community/routes';
 import { postRoutes } from '../posts/routes';
+import { userRoutes } from '../user/routes';
 import { NotFound } from '../../NotFound';
 
 import { ReactComponent as FeedIcon } from './assets/feed.svg';
@@ -20,6 +21,7 @@ export function FluidNavigation() {
             {feedRoutes}
             {postRoutes}
             {communityRoutes}
+            {userRoutes}
             <Redirect exact from="/" to="/feed" />
             <Route path="*">
               <NotFound />

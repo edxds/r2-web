@@ -1,11 +1,17 @@
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import { Button } from '@r2/components/Button';
 import jamelonLogoSrc from '@r2/assets/icons/logo-1.svg';
 
+import { useUser } from '../user/hooks';
+
 export interface WelcomeProps {}
 
 export function Welcome(props: WelcomeProps) {
+  const [, userQuery] = useUser({ dontRedirect: true });
+
+  if (!userQuery.isError && !userQuery.isLoading) return <Redirect to="/" />;
+
   return (
     <div className="flex flex-1 justify-center items-stretch md:items-center p-6">
       <div className="flex flex-1 flex-col space-y-6 md:mb-12 md:space-y-12 md:max-w-sm">
