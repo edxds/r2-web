@@ -40,8 +40,8 @@ export const Button: PolymorphicComponent<ButtonOwnProps, typeof defaultElement>
         ref={ref}
         className={clsx(className, 'flex items-center justify-center', 'disabled:opacity-50', {
           // Border radius
-          'rounded-xl': size !== 'sm',
-          'rounded-lg': size === 'sm',
+          'rounded-xl': size !== 'sm' && variant !== 'text',
+          'rounded-lg': size === 'sm' && variant !== 'text',
 
           // Weight
           'font-black': weight === 'heavy',
